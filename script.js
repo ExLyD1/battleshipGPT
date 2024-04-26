@@ -14,14 +14,16 @@ document.addEventListener("DOMContentLoaded", function() {
   const totalShipCount = 10;
   let rotate = false;
 
+
   // чек ли разместил все корабли
   function checkAllShipsPlaced() {
     if (placedShipCount === totalShipCount) {
       console.log('Игрок разместил все корабли!');
       playButt.style.display = 'block'
-      
+        
     }
   }
+
 
   // корабль в выбраную ячейку перемещаем
   function moveShipToCell() {
@@ -41,7 +43,6 @@ document.addEventListener("DOMContentLoaded", function() {
       document.querySelector(`[data-row="${row - 1}"][data-col="${col}"]`),
       document.querySelector(`[data-row="${row + 1}"][data-col="${col}"]`),
 
-      
     ];
 
     
@@ -111,44 +112,57 @@ document.addEventListener("DOMContentLoaded", function() {
       
 
       
-
-      if (!rotate) {
-        for (let i = 0; i < currentDeck; i++) {
-
+      try {
+        if (!rotate) {
+          if (col + currentDeck > 9) {
+            console.log('вышел за границы');
+          } 
           
-            let currentCell = document.createElement('td');
-            currentCell.setAttribute('data-row', currentRow);
-            currentCell.setAttribute('data-col', currentCol);
-            currentCell.classList.add('cellPast');
 
-            let oldCell = playgroundTable.querySelector(`[data-row="${currentRow}"][data-col="${currentCol}"]`);
-
-            oldCell.replaceWith(currentCell);
+          for (let i = 0; i < currentDeck; i++) {
 
             
-            oldCell.classList.add('occupied')
+              let currentCell = document.createElement('td');
+              currentCell.setAttribute('data-row', currentRow);
+              currentCell.setAttribute('data-col', currentCol);
+              currentCell.classList.add('cellPast');
 
-            currentCol++;
-          }
-      } else {
-        for (let i = 0; i < currentDeck; i++) {
+              let oldCell = playgroundTable.querySelector(`[data-row="${currentRow}"][data-col="${currentCol}"]`);
 
-          
-            let currentCell = document.createElement('td');
-            currentCell.setAttribute('data-row', currentRow);
-            currentCell.setAttribute('data-col', currentCol);
-            currentCell.classList.add('cellPast');
+              oldCell.replaceWith(currentCell);
 
-            let oldCell = playgroundTable.querySelector(`[data-row="${currentRow}"][data-col="${currentCol}"]`);
+              
+              oldCell.classList.add('occupied')
 
-            oldCell.replaceWith(currentCell);
+              currentCol++;
+            }
+        } else {
+            if ( row +currentDeck > 9) {
+                console.log('вышел за границы');
+            }
+            for (let i = 0; i < currentDeck; i++) {
 
             
-            oldCell.classList.add('occupied')
+              let currentCell = document.createElement('td');
+              currentCell.setAttribute('data-row', currentRow);
+              currentCell.setAttribute('data-col', currentCol);
+              currentCell.classList.add('cellPast');
 
-            currentRow++;
-          }
+              let oldCell = playgroundTable.querySelector(`[data-row="${currentRow}"][data-col="${currentCol}"]`);
+
+              oldCell.replaceWith(currentCell);
+
+              
+              oldCell.classList.add('occupied')
+
+              currentRow++;
+            }
+        }
+      } catch (error) {
+        console.log(error);
+        return console.log('Нельзя поставить корабль таким образом!');
       }
+      
       
 
         
@@ -206,6 +220,7 @@ document.addEventListener("DOMContentLoaded", function() {
     });
   });
 
+  // переворачивать кораблики
   rotateShipButt.addEventListener('click', ()=>{
     if (!rotate) {
       rotate = true;
