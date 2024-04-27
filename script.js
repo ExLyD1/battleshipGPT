@@ -13,6 +13,7 @@ document.addEventListener("DOMContentLoaded", function() {
   let placedShipCount = 0;
   const totalShipCount = 10;
   let rotate = false;
+  const infoForRotation = document.querySelector('.infoForRotation')
 
 
   // чек ли разместил все корабли
@@ -29,7 +30,7 @@ document.addEventListener("DOMContentLoaded", function() {
   function moveShipToCell() {
     const row = parseInt(this.getAttribute('data-row'));
     const col = parseInt(this.getAttribute('data-col'));
-    placedShipCount++
+    
     
     
 
@@ -71,10 +72,13 @@ document.addEventListener("DOMContentLoaded", function() {
 
 
     if (selectedShip && !this.classList.contains('occupied') && !isNearbyOccupied) {
+
+      // установка максимум кораблей одного типа
       if (selectedShip.classList.contains('four-cell-ship')) {
 
         if (fourCellShipCount < 1) {
           fourCellShipCount++;
+          placedShipCount++;
         } 
         else {
           console.log('Больше нельзя поставить данный тип кораблей');
@@ -84,6 +88,7 @@ document.addEventListener("DOMContentLoaded", function() {
        else if (selectedShip.classList.contains('three-cell-ship')) {
         if (threeCellShipCount < 2) {
           threeCellShipCount++;
+          placedShipCount++;
         } else {
           console.log('Больше нельзя поставить данный тип кораблей');
           return;
@@ -92,6 +97,7 @@ document.addEventListener("DOMContentLoaded", function() {
       else if (selectedShip.classList.contains('two-cell-ship')) {
         if ( twoCellShipCount < 3) {
           twoCellShipCount++;
+          placedShipCount++;
         } else {
           console.log('Больше нельзя поставить данный тип кораблей');
           return;
@@ -100,6 +106,7 @@ document.addEventListener("DOMContentLoaded", function() {
       else if (selectedShip.classList.contains('one-cell-ship')) {
         if ( oneCellShipCount < 4) {
           oneCellShipCount++;
+          placedShipCount++;
         } else {
           console.log('Больше нельзя поставить данный тип кораблей');
           return;
@@ -155,7 +162,7 @@ document.addEventListener("DOMContentLoaded", function() {
           if (!rotate) {
             
             for (let i = 0; i < currentDeck; i++) {
-
+                
               
                 let currentCell = document.createElement('td');
                 currentCell.setAttribute('data-row', currentRow);
@@ -166,10 +173,13 @@ document.addEventListener("DOMContentLoaded", function() {
 
                 oldCell.replaceWith(currentCell);
 
-                
-                oldCell.classList.add('occupied')
+                oldCell.classList.add('occupied');
 
                 currentCol++;
+
+                
+
+                
               }
           } else {
               for (let i = 0; i < currentDeck; i++) {
@@ -193,7 +203,8 @@ document.addEventListener("DOMContentLoaded", function() {
         }
       } catch (error) {
         console.log(error);
-        return console.log('Нельзя поставить корабль таким образом!');
+        console.log('Нельзя поставить корабль таким образом!');
+        
       }
       
       
@@ -256,10 +267,10 @@ document.addEventListener("DOMContentLoaded", function() {
   rotateShipButt.addEventListener('click', ()=>{
     if (!rotate) {
       rotate = true;
-      console.log('Корабли теперь перевернутые');
+      infoForRotation.textContent = "Корабли ставятся вертикально"
     } else {
       rotate = false;
-      console.log('Корабли теперь нормальные');
+      infoForRotation.textContent = "Корабли ставятся горизонатально"
     }
   })
 
