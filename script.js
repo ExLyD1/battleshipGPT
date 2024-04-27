@@ -29,7 +29,8 @@ document.addEventListener("DOMContentLoaded", function() {
   function moveShipToCell() {
     const row = parseInt(this.getAttribute('data-row'));
     const col = parseInt(this.getAttribute('data-col'));
-    placedShipCount++;
+    placedShipCount++
+    
     
 
     // Запрет на корабль рядом уже с стоящим кораблем
@@ -106,57 +107,89 @@ document.addEventListener("DOMContentLoaded", function() {
       }
 
       
-
+      this.classList.add('occupied');
+      resetColouredCells();
+      checkAllShipsPlaced()
+      
       let currentRow = row;
       let currentCol = col;
       
-
-      
       try {
-        if (!rotate) {
-          if (col + currentDeck > 9) {
-            console.log('вышел за границы');
-          } 
+
+        for (let i = 0; i < currentDeck; i++) {
+          opportunityPlaceShip = true;
+          if((!rotate && i + col > 9) || (rotate && i + row >9)) {
+            console.log('Корабль нельзя так поставить!!');
+            opportunityPlaceShip = false;
+            this.classList.remove('occupied');
+            if ( selectedShip = fourCellShipCount ) {
+              fourCellShipCount-=1
+              placedShipCount-=1
+            } else if ( selectedShip = threeCellShipCount ) {
+              console.log(threeCellShipCount);
+              console.log(placedShipCount);
+              threeCellShipCount-=1
+              placedShipCount-=1
+              console.log(threeCellShipCount);
+              console.log(placedShipCount);
+            } else if ( selectedShip = twoCellShipCount ) {
+              console.log(twoCellShipCount);
+              console.log(placedShipCount);
+              twoCellShipCount-=1
+              placedShipCount-=1
+              console.log(twoCellShipCount);
+              console.log(placedShipCount);
+            } else if ( selectedShip = oneCellShipCount ) {
+              oneCellShipCount-=1
+              placedShipCount-=1
+            }
+            break;
+          }
           
+        }
 
-          for (let i = 0; i < currentDeck; i++) {
-
+        if (opportunityPlaceShip) {
+          console.log(`Корабль поставлен на ряду ${row}, и в ячейке ${col}`);
+          console.log('кол-во палуб: ' + currentDeck);
+          
+          if (!rotate) {
             
-              let currentCell = document.createElement('td');
-              currentCell.setAttribute('data-row', currentRow);
-              currentCell.setAttribute('data-col', currentCol);
-              currentCell.classList.add('cellPast');
-
-              let oldCell = playgroundTable.querySelector(`[data-row="${currentRow}"][data-col="${currentCol}"]`);
-
-              oldCell.replaceWith(currentCell);
-
-              
-              oldCell.classList.add('occupied')
-
-              currentCol++;
-            }
-        } else {
-            if ( row +currentDeck > 9) {
-                console.log('вышел за границы');
-            }
             for (let i = 0; i < currentDeck; i++) {
 
-            
-              let currentCell = document.createElement('td');
-              currentCell.setAttribute('data-row', currentRow);
-              currentCell.setAttribute('data-col', currentCol);
-              currentCell.classList.add('cellPast');
+              
+                let currentCell = document.createElement('td');
+                currentCell.setAttribute('data-row', currentRow);
+                currentCell.setAttribute('data-col', currentCol);
+                currentCell.classList.add('cellPast');
 
-              let oldCell = playgroundTable.querySelector(`[data-row="${currentRow}"][data-col="${currentCol}"]`);
+                let oldCell = playgroundTable.querySelector(`[data-row="${currentRow}"][data-col="${currentCol}"]`);
 
-              oldCell.replaceWith(currentCell);
+                oldCell.replaceWith(currentCell);
+
+                
+                oldCell.classList.add('occupied')
+
+                currentCol++;
+              }
+          } else {
+              for (let i = 0; i < currentDeck; i++) {
 
               
-              oldCell.classList.add('occupied')
+                let currentCell = document.createElement('td');
+                currentCell.setAttribute('data-row', currentRow);
+                currentCell.setAttribute('data-col', currentCol);
+                currentCell.classList.add('cellPast');
 
-              currentRow++;
-            }
+                let oldCell = playgroundTable.querySelector(`[data-row="${currentRow}"][data-col="${currentCol}"]`);
+
+                oldCell.replaceWith(currentCell);
+
+                
+                oldCell.classList.add('occupied')
+
+                currentRow++;
+              }
+          }
         }
       } catch (error) {
         console.log(error);
@@ -167,10 +200,7 @@ document.addEventListener("DOMContentLoaded", function() {
 
         
 
-      console.log(`Корабль поставлен на ряду ${row}, и в ячейке ${col}`);
-      this.classList.add('occupied');
-      resetColouredCells();
-      checkAllShipsPlaced()
+      
     } 
   }
 
@@ -204,7 +234,9 @@ document.addEventListener("DOMContentLoaded", function() {
     });
   }
 
+
   // клик на корабль
+
   ships.forEach(ship => {
     ship.addEventListener('click', function(event) {
       event.stopPropagation();
@@ -216,7 +248,7 @@ document.addEventListener("DOMContentLoaded", function() {
       currentDeck = ship.getAttribute('data-decks');
 
 
-    console.log('кол-во палуб: ' + currentDeck);
+    
     });
   });
 
