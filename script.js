@@ -305,22 +305,5 @@ document.addEventListener("DOMContentLoaded", function() {
     selectedShip = null;
   });
 
-  
-  
-  
-
-  
-
-
-
-
-
-
-
-
-
-
-
-  
 });
 

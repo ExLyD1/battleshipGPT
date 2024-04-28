@@ -68,3 +68,6 @@ body{
 .rotated{
   transform: rotate(180deg);
 }
+.occupied{
+  background-color: rgb(133, 115, 115);
+}
