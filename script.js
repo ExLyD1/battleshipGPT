@@ -4,6 +4,7 @@ document.addEventListener("DOMContentLoaded", function() {
   const playgroundTable = document.getElementById("playground");
   const playButt = document.querySelector('.playButt')
   const rotateShipButt = document.querySelector('.rotateShip')
+  const infoForRotation = document.querySelector('.infoForRotation')
   let selectedShip = null;
   let fourCellShipCount = 0;
   let threeCellShipCount = 0;
@@ -11,9 +12,9 @@ document.addEventListener("DOMContentLoaded", function() {
   let oneCellShipCount = 0;
   let currentDeck = 0;
   let placedShipCount = 0;
-  const totalShipCount = 10;
+  const totalShipCount = 9;
   let rotate = false;
-  const infoForRotation = document.querySelector('.infoForRotation')
+  
 
 
   // чек ли разместил все корабли
@@ -73,47 +74,6 @@ document.addEventListener("DOMContentLoaded", function() {
 
     if (selectedShip && !this.classList.contains('occupied') && !isNearbyOccupied) {
 
-      // установка максимум кораблей одного типа
-      if (selectedShip.classList.contains('four-cell-ship')) {
-
-        if (fourCellShipCount < 1) {
-          fourCellShipCount++;
-          placedShipCount++;
-        } 
-        else {
-          console.log('Больше нельзя поставить данный тип кораблей');
-          return;
-        }
-      }
-       else if (selectedShip.classList.contains('three-cell-ship')) {
-        if (threeCellShipCount < 2) {
-          threeCellShipCount++;
-          placedShipCount++;
-        } else {
-          console.log('Больше нельзя поставить данный тип кораблей');
-          return;
-        }
-      } 
-      else if (selectedShip.classList.contains('two-cell-ship')) {
-        if ( twoCellShipCount < 3) {
-          twoCellShipCount++;
-          placedShipCount++;
-        } else {
-          console.log('Больше нельзя поставить данный тип кораблей');
-          return;
-        }
-      } 
-      else if (selectedShip.classList.contains('one-cell-ship')) {
-        if ( oneCellShipCount < 4) {
-          oneCellShipCount++;
-          placedShipCount++;
-        } else {
-          console.log('Больше нельзя поставить данный тип кораблей');
-          return;
-        }
-      }
-
-      
       this.classList.add('occupied');
       resetColouredCells();
       checkAllShipsPlaced()
@@ -122,43 +82,104 @@ document.addEventListener("DOMContentLoaded", function() {
       let currentCol = col;
       
       try {
-
+        // Проверка установки корабля за границами поля
         for (let i = 0; i < currentDeck; i++) {
           opportunityPlaceShip = true;
           if((!rotate && i + col > 9) || (rotate && i + row >9)) {
             console.log('Корабль нельзя так поставить!!');
             opportunityPlaceShip = false;
             this.classList.remove('occupied');
-            if ( selectedShip = fourCellShipCount ) {
-              fourCellShipCount-=1
-              placedShipCount-=1
-            } else if ( selectedShip = threeCellShipCount ) {
-              console.log(threeCellShipCount);
-              console.log(placedShipCount);
-              threeCellShipCount-=1
-              placedShipCount-=1
-              console.log(threeCellShipCount);
-              console.log(placedShipCount);
-            } else if ( selectedShip = twoCellShipCount ) {
-              console.log(twoCellShipCount);
-              console.log(placedShipCount);
-              twoCellShipCount-=1
-              placedShipCount-=1
-              console.log(twoCellShipCount);
-              console.log(placedShipCount);
-            } else if ( selectedShip = oneCellShipCount ) {
-              oneCellShipCount-=1
-              placedShipCount-=1
+            if ( selectedShip == fourCellShipCount ) {
+
+                fourCellShipCount-1
+                placedShipCount-1
+
+            } else if ( selectedShip.classList.contains('three-cell-ship') ) {
+
+                threeCellShipCount-1
+                placedShipCount-1
+
+            } else if ( selectedShip == twoCellShipCount ) {
+
+                twoCellShipCount-1
+                placedShipCount-1
+
+            } else if ( selectedShip == oneCellShipCount ) {
+
+                oneCellShipCount-1
+                placedShipCount-1
             }
             break;
           }
           
         }
+        
 
         if (opportunityPlaceShip) {
-          console.log(`Корабль поставлен на ряду ${row}, и в ячейке ${col}`);
-          console.log('кол-во палуб: ' + currentDeck);
           
+          
+          // установка максимум кораблей одного типа
+          if (selectedShip.classList.contains('four-cell-ship')) {
+
+            if (fourCellShipCount < 1) {
+              fourCellShipCount++;
+              placedShipCount++;
+              console.log(`Корабль поставлен на ряду ${row}, и в ячейке ${col}`);
+              console.log('кол-во палуб: ' + currentDeck);
+
+
+            } 
+            else {
+              console.log('Больше нельзя поставить данный тип кораблей');
+              this.classList.remove('occupied');
+              return;
+            }
+          }
+          else if (selectedShip.classList.contains('three-cell-ship')) {
+            if (threeCellShipCount < 2) {
+              threeCellShipCount++;
+              placedShipCount++;
+              console.log(`Корабль поставлен на ряду ${row}, и в ячейке ${col}`);
+              console.log('кол-во палуб: ' + currentDeck);
+
+
+            } else {
+              console.log('Больше нельзя поставить данный тип кораблей');
+              this.classList.remove('occupied');
+              return;
+            }
+          } 
+          else if (selectedShip.classList.contains('two-cell-ship')) {
+            if ( twoCellShipCount < 3) {
+              twoCellShipCount++;
+              placedShipCount++;
+              console.log(`Корабль поставлен на ряду ${row}, и в ячейке ${col}`);
+              console.log('кол-во палуб: ' + currentDeck);
+
+
+            } else {
+              console.log('Больше нельзя поставить данный тип кораблей');
+              this.classList.remove('occupied');
+              return;
+            }
+          } 
+          else if (selectedShip.classList.contains('one-cell-ship')) {
+            if ( oneCellShipCount < 4) {
+              oneCellShipCount++;
+              placedShipCount++;
+              console.log(`Корабль поставлен на ряду ${row}, и в ячейке ${col}`);
+              console.log('кол-во палуб: ' + currentDeck);
+
+
+            } else {
+              console.log('Больше нельзя поставить данный тип кораблей');
+              this.classList.remove('occupied');
+              return;
+            }
+          }
+
+          // Логика установки корабля горизонтально
+
           if (!rotate) {
             
             for (let i = 0; i < currentDeck; i++) {
@@ -181,6 +202,7 @@ document.addEventListener("DOMContentLoaded", function() {
 
                 
               }
+            // Логика установки корабля вертикально
           } else {
               for (let i = 0; i < currentDeck; i++) {
 
