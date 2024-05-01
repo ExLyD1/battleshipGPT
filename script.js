@@ -184,7 +184,6 @@ document.addEventListener("DOMContentLoaded", function() {
             
             for (let i = 0; i < currentDeck; i++) {
                 
-              
                 let currentCell = document.createElement('td');
                 currentCell.setAttribute('data-row', currentRow);
                 currentCell.setAttribute('data-col', currentCol);
@@ -192,12 +191,15 @@ document.addEventListener("DOMContentLoaded", function() {
 
                 let oldCell = playgroundTable.querySelector(`[data-row="${currentRow}"][data-col="${currentCol}"]`);
 
+              
+
                 oldCell.replaceWith(currentCell);
 
                 oldCell.classList.add('occupied');
 
                 currentCol++;
 
+                
                 
 
                 

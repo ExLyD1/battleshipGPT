@@ -24,6 +24,7 @@ body{
   .container{
     flex-direction: column;
     height: auto;
+    padding-bottom: 50px;
   }
 }
 .titleHolder{
@@ -69,5 +70,7 @@ body{
   transform: rotate(180deg);
 }
 .occupied{
-  background-color: rgb(133, 115, 115);
+  background-image: url(images/shootImg.svg);
+  background-repeat: no-repeat;
+  background-size: 100%;
 }
