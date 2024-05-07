@@ -1,2 +1,8 @@
 # battleshipGPT
-battleship using own enemy algorithm
+Check SECOND BRANCH!!!!!
+Check SECOND BRANCH!!!!!
+Check SECOND BRANCH!!!!!
+Check SECOND BRANCH!!!!!
+Check SECOND BRANCH!!!!!
+Check SECOND BRANCH!!!!!
+Check SECOND BRANCH!!!!!
